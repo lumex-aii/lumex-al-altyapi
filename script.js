@@ -53,3 +53,26 @@ function addMenu() {
 }
 
 loadMenu();
+let menu = ["Pizza", "Burger", "Sushi"];
+
+const menuList = document.getElementById("menu");
+
+function loadMenu() {
+  menuList.innerHTML = "";
+  menu.forEach(item => {
+    let li = document.createElement("li");
+    li.innerText = item;
+    menuList.appendChild(li);
+  });
+}
+
+function addMenu() {
+  let input = document.getElementById("menuInput");
+  if(input.value !== ""){
+    menu.push(input.value);
+    input.value = "";
+    loadMenu();
+  }
+}
+
+loadMenu();
