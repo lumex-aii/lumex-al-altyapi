@@ -31,3 +31,25 @@ setInterval(() => {
   courier.style.left = x + "px";
   courier.style.top = y + "px";
 }, 500);
+let menu = ["Pizza", "Burger", "Sushi"];
+const menuList = document.getElementById("menu");
+
+function loadMenu() {
+  menuList.innerHTML = "";
+  menu.forEach(m => {
+    let li = document.createElement("li");
+    li.innerText = m;
+    menuList.appendChild(li);
+  });
+}
+
+function addMenu() {
+  let input = document.getElementById("menuInput");
+  if(input.value.trim() !== ""){
+    menu.push(input.value);
+    input.value = "";
+    loadMenu();
+  }
+}
+
+loadMenu();
