@@ -76,3 +76,20 @@ function addMenu() {
 }
 
 loadMenu();
+function addMenu() {
+    let input = document.getElementById("menuInput");
+    let menuList = document.getElementById("menu");
+
+    let urun = input.value;
+
+    if (urun == "") {
+        alert("Ürün adı yaz!");
+        return;
+    }
+
+    let li = document.createElement("li");
+    li.innerText = urun;
+
+    menuList.appendChild(li);
+    input.value = "";
+}
