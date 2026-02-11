@@ -1,113 +1,38 @@
-// ======================
-// LUMEX MINI OS SCRIPT
-// ======================
+// Firebase CDN bağlantıları
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// Dashboard counters
-let activeOrders = 0;
-let couriersOnline = 2;
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyB59xwz8LUS1IzkEHW_gWjsV4fFVo153qM",
+  authDomain: "lumex-2e0d4.firebaseapp.com",
+  projectId: "lumex-2e0d4",
+  storageBucket: "lumex-2e0d4.firebasestorage.app",
+  messagingSenderId: "396645386494",
+  appId: "1:396645386494:web:e066d992ba8c7ac988bdaf"
+};
 
-// Elements
-const activeOrdersEl = document.getElementById("activeOrders");
-const couriersOnlineEl = document.getElementById("couriersOnline");
-const orderListEl = document.getElementById("orderList");
-const courierBox = document.getElementById("courierBox");
-const aiResponse = document.getElementById("aiResponse");
+// Firebase başlat
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// ======================
-// ADD ORDER
-// ======================
-function addOrder() {
-  const input = document.getElementById("orderInput");
-  const orderName = input.value.trim();
+// Sipariş ekleme fonksiyonu
+window.addOrder = async function(name, price) {
+  await addDoc(collection(db, "orders"), {
+    name: name,
+    price: price,
+    status: "pending",
+    createdAt: new Date()
+  });
+  alert("Sipariş gönderildi!");
+};
 
-  if (orderName === "") return alert("Order name required!");
-
-  const li = document.createElement("li");
-  li.textContent = orderName;
-
-  // Remove button
-  const btn = document.createElement("button");
-  btn.textContent = "Complete";
-  btn.onclick = () => {
-    li.remove();
-    activeOrders--;
-    updateDashboard();
-  };
-
-  li.appendChild(btn);
-  orderListEl.appendChild(li);
-
-  activeOrders++;
-  updateDashboard();
-  input.value = "";
-}
-
-// ======================
-// DASHBOARD UPDATE
-// ======================
-function updateDashboard() {
-  activeOrdersEl.textContent = activeOrders;
-  couriersOnlineEl.textContent = couriersOnline;
-}
-
-// ======================
-// COURIER SIMULATION
-// ======================
-function simulateCouriers() {
-  const names = ["Ali", "Mehmet", "Ivan", "Marko", "John"];
-  courierBox.innerHTML = "";
-
-  for (let i = 0; i < couriersOnline; i++) {
-    const div = document.createElement("div");
-    const name = names[Math.floor(Math.random() * names.length)];
-    const distance = (Math.random() * 5).toFixed(2);
-
-    div.textContent = `🚴 Courier ${name} - ${distance} km away`;
-    courierBox.appendChild(div);
-  }
-}
-
-// Change courier count randomly
-setInterval(() => {
-  couriersOnline = Math.floor(Math.random() * 5) + 1;
-  updateDashboard();
-  simulateCouriers();
-}, 5000);
-
-// ======================
-// FAKE AI ASSISTANT
-// ======================
-function askAI() {
-  const input = document.getElementById("aiInput").value.toLowerCase();
-  let reply = "I am analyzing your restaurant data...";
-
-  if (input.includes("profit")) reply = "Tip: Increase upsell items like drinks.";
-  if (input.includes("order")) reply = "Peak orders detected between 19:00 - 21:00.";
-  if (input.includes("courier")) reply = "Courier speed below optimal. Consider bonuses.";
-  if (input.includes("menu")) reply = "Remove low-selling menu items to increase margin.";
-
-  aiResponse.innerText = "🤖 Lumex AI: " + reply;
-}
-
-// ======================
-// AUTO FAKE ORDERS DEMO
-// ======================
-const demoOrders = [
-  "Burger + Cola",
-  "Pizza Margherita",
-  "Döner Menü",
-  "Sushi Set",
-  "Tavuk Wrap"
-];
-
-setInterval(() => {
-  if (Math.random() > 0.6) {
-    const order = demoOrders[Math.floor(Math.random() * demoOrders.length)];
-    document.getElementById("orderInput").value = order;
-    addOrder();
-  }
-}, 8000);
-
-// Initial load
-updateDashboard();
-simulateCouriers();
+// Siparişleri canlı çekme
+onSnapshot(collection(db, "orders"), (snapshot) => {
+  const list = document.getElementById("orders");
+  list.innerHTML = "";
+  snapshot.forEach((doc) => {
+    const data = doc.data();
+    list.innerHTML += `<li>${data.name} - ${data.price} TL - ${data.status}</li>`;
+  });
+});
