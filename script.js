@@ -1,95 +1,113 @@
-let orders = ["Pizza Order #101","Burger Order #102","Sushi Order #103"];
+// ======================
+// LUMEX MINI OS SCRIPT
+// ======================
 
-const orderList = document.getElementById("orders");
-const orderCount = document.getElementById("orderCount");
+// Dashboard counters
+let activeOrders = 0;
+let couriersOnline = 2;
 
-function loadOrders() {
-  orderList.innerHTML = "";
-  orders.forEach(o => {
-    let li = document.createElement("li");
-    li.innerText = o;
-    orderList.appendChild(li);
-  });
-  orderCount.innerText = orders.length;
+// Elements
+const activeOrdersEl = document.getElementById("activeOrders");
+const couriersOnlineEl = document.getElementById("couriersOnline");
+const orderListEl = document.getElementById("orderList");
+const courierBox = document.getElementById("courierBox");
+const aiResponse = document.getElementById("aiResponse");
+
+// ======================
+// ADD ORDER
+// ======================
+function addOrder() {
+  const input = document.getElementById("orderInput");
+  const orderName = input.value.trim();
+
+  if (orderName === "") return alert("Order name required!");
+
+  const li = document.createElement("li");
+  li.textContent = orderName;
+
+  // Remove button
+  const btn = document.createElement("button");
+  btn.textContent = "Complete";
+  btn.onclick = () => {
+    li.remove();
+    activeOrders--;
+    updateDashboard();
+  };
+
+  li.appendChild(btn);
+  orderListEl.appendChild(li);
+
+  activeOrders++;
+  updateDashboard();
+  input.value = "";
 }
 
-loadOrders();
+// ======================
+// DASHBOARD UPDATE
+// ======================
+function updateDashboard() {
+  activeOrdersEl.textContent = activeOrders;
+  couriersOnlineEl.textContent = couriersOnline;
+}
 
-const map = document.getElementById("map");
-const courier = document.createElement("div");
-courier.className = "courier";
-map.appendChild(courier);
+// ======================
+// COURIER SIMULATION
+// ======================
+function simulateCouriers() {
+  const names = ["Ali", "Mehmet", "Ivan", "Marko", "John"];
+  courierBox.innerHTML = "";
 
-let x = 0;
-let y = 0;
+  for (let i = 0; i < couriersOnline; i++) {
+    const div = document.createElement("div");
+    const name = names[Math.floor(Math.random() * names.length)];
+    const distance = (Math.random() * 5).toFixed(2);
+
+    div.textContent = `🚴 Courier ${name} - ${distance} km away`;
+    courierBox.appendChild(div);
+  }
+}
+
+// Change courier count randomly
+setInterval(() => {
+  couriersOnline = Math.floor(Math.random() * 5) + 1;
+  updateDashboard();
+  simulateCouriers();
+}, 5000);
+
+// ======================
+// FAKE AI ASSISTANT
+// ======================
+function askAI() {
+  const input = document.getElementById("aiInput").value.toLowerCase();
+  let reply = "I am analyzing your restaurant data...";
+
+  if (input.includes("profit")) reply = "Tip: Increase upsell items like drinks.";
+  if (input.includes("order")) reply = "Peak orders detected between 19:00 - 21:00.";
+  if (input.includes("courier")) reply = "Courier speed below optimal. Consider bonuses.";
+  if (input.includes("menu")) reply = "Remove low-selling menu items to increase margin.";
+
+  aiResponse.innerText = "🤖 Lumex AI: " + reply;
+}
+
+// ======================
+// AUTO FAKE ORDERS DEMO
+// ======================
+const demoOrders = [
+  "Burger + Cola",
+  "Pizza Margherita",
+  "Döner Menü",
+  "Sushi Set",
+  "Tavuk Wrap"
+];
 
 setInterval(() => {
-  x += 5;
-  y += 3;
-  if (x > 290) x = 0;
-  if (y > 190) y = 0;
-  courier.style.left = x + "px";
-  courier.style.top = y + "px";
-}, 500);
-let menu = ["Pizza", "Burger", "Sushi"];
-const menuList = document.getElementById("menu");
-
-function loadMenu() {
-  menuList.innerHTML = "";
-  menu.forEach(m => {
-    let li = document.createElement("li");
-    li.innerText = m;
-    menuList.appendChild(li);
-  });
-}
-
-function addMenu() {
-  let input = document.getElementById("menuInput");
-  if(input.value.trim() !== ""){
-    menu.push(input.value);
-    input.value = "";
-    loadMenu();
+  if (Math.random() > 0.6) {
+    const order = demoOrders[Math.floor(Math.random() * demoOrders.length)];
+    document.getElementById("orderInput").value = order;
+    addOrder();
   }
-}
+}, 8000);
 
-loadMenu();
-let menu = ["Pizza", "Burger", "Sushi"];
-
-const menuList = document.getElementById("menu");
-
-function loadMenu() {
-  menuList.innerHTML = "";
-  menu.forEach(item => {
-    let li = document.createElement("li");
-    li.innerText = item;
-    menuList.appendChild(li);
-  });
-}
-
-function addMenu() {
-  let input = document.getElementById("menuInput");
-  if(input.value !== ""){
-    menu.push(input.value);
-    input.value = "";
-    loadMenu();
-  }
-}
-
-loadMenu();
-function addMenu() {
-    let input = document.getElementById("menuInput");
-    let menuList = document.getElementById("menu");
-
-    let urun = input.value;
-
-    if (urun == "") {
-        alert("Ürün adı yaz!");
-        return;
-    }
-
-    let li = document.createElement("li");
-    li.innerText = urun;
-
-    menuList.appendChild(li);
-    input.value = "";
-}
+// Initial load
+updateDashboard();
+simulateCouriers();
