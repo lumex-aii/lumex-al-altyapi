@@ -1,26 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Lumex Mini OS</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <title>LUMEX Mini OS</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<h1>LUMEX Restaurant Panel</h1>
+<!-- HEADER -->
+<header>
+    <h1>LUMEX Restaurant Panel</h1>
+    <p>Mini Restaurant Operating System</p>
+</header>
 
-<div class="dashboard">
-  <div class="card">Active Orders: <span id="orderCount">0</span></div>
-  <div class="card">Couriers Online: 2</div>
-</div>
+<!-- DASHBOARD CARDS -->
+<section class="dashboard">
+    <div class="card">
+        <h2 id="activeOrders">0</h2>
+        <p>Active Orders</p>
+    </div>
 
-<h2>Orders</h2> <h2>Menü</h2>
-<ul id="menu"></ul>
-<input id="menuInput" placeholder="Yeni ürün">
-<button onclick="addMenu()">Ekle</button>
-<ul id="orders"></ul>
+    <div class="card">
+        <h2 id="couriersOnline">0</h2>
+        <p>Couriers Online</p>
+    </div>
+</section>
 
-<h2>Courier Tracker (Demo)</h2>
-<div id="map"></div>
+<!-- ORDER PANEL -->
+<section class="panel">
+    <h2>Orders</h2>
+    <input id="orderInput" placeholder="Order name (e.g. Pizza + Cola)" />
+    <button onclick="addOrder()">Add Order</button>
+    <ul id="orderList"></ul>
+</section>
+
+<!-- COURIER TRACKER -->
+<section class="panel">
+    <h2>Courier Tracker (Demo)</h2>
+    <div id="courierBox"></div>
+</section>
+
+<!-- AI ASSISTANT DEMO -->
+<section class="panel">
+    <h2>LUMEX AI Assistant</h2>
+    <input id="aiInput" placeholder="Ask AI..." />
+    <button onclick="askAI()">Ask</button>
+    <div id="aiResponse"></div>
+</section>
 
 <script src="script.js"></script>
 </body>
