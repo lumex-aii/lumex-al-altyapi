@@ -1,6 +1,5 @@
-let totalMoney = 0;
-const totalSpan = document.getElementById("total");
 let orderNumber = 1;
+let totalMoney = 0;
 
 const menuItems = [
   {name: "Margherita Pizza", price: 120},
@@ -10,6 +9,7 @@ const menuItems = [
 
 const menuDiv = document.getElementById("menu");
 const ordersList = document.getElementById("orders");
+const totalSpan = document.getElementById("total");
 
 // Menü oluştur
 menuItems.forEach(item => {
@@ -27,7 +27,6 @@ function order(item) {
   li.innerText = "Sipariş #" + orderNumber + " → " + item + " (" + pizza.price + "₺)";
   ordersList.appendChild(li);
 
-  // Toplam kazanç
   totalMoney += pizza.price;
   totalSpan.innerText = totalMoney;
 
