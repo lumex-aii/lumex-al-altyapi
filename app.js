@@ -1,3 +1,4 @@
+let totalMoney = 0;
 let orderNumber = 1;
 
 const menuItems = [
