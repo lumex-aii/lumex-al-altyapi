@@ -1,4 +1,5 @@
 let totalMoney = 0;
+const totalSpan = document.getElementById("total");
 let orderNumber = 1;
 
 const menuItems = [
@@ -21,8 +22,14 @@ menuItems.forEach(item => {
 // Sipariş fonksiyonu
 function order(item) {
   const pizza = menuItems.find(p => p.name === item);
+
   const li = document.createElement("li");
   li.innerText = "Sipariş #" + orderNumber + " → " + item + " (" + pizza.price + "₺)";
   ordersList.appendChild(li);
+
+  // Toplam kazanç
+  totalMoney += pizza.price;
+  totalSpan.innerText = totalMoney;
+
   orderNumber++;
 }
