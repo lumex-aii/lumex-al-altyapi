@@ -33,7 +33,15 @@
     <input id="orderInput" placeholder="Order name (e.g. Pizza + Cola)" />
     <button onclick="addOrder()">Add Order</button>
     <ul id="orderList"></ul>
-</section>
+</section> <h1>Pizzacı Menü</h1>
+<button onclick="order('Margherita Pizza')">Margherita 120₺</button>
+<button onclick="order('Sucuklu Pizza')">Sucuklu 140₺</button>
+
+<script>
+function order(item){
+  alert(item + " sipariş alındı!");
+}
+</script>
 
 <!-- COURIER TRACKER -->
 <section class="panel">
