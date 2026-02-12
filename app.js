@@ -19,8 +19,9 @@ menuItems.forEach(item => {
 
 // Sipariş fonksiyonu
 function order(item) {
+  const pizza = menuItems.find(p => p.name === item);
   const li = document.createElement("li");
-  li.innerText = "Sipariş #" + orderNumber + " → " + item;
+  li.innerText = "Sipariş #" + orderNumber + " → " + item + " (" + pizza.price + "₺)";
   ordersList.appendChild(li);
   orderNumber++;
 }
