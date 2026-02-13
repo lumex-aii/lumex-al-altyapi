@@ -33,7 +33,13 @@ function order(itemName) {
   // AI'a sipariş gönder
   aiLogOrder({ item: itemName, price: pizza.price, time: new Date() });
 
-  orderNumber++;
+  saveOrderData({
+  item: item,
+  price: pizza.price,
+  time: new Date().toISOString()
+});
+
+orderNumber++;
 }
 
 // AI Durum güncelle
