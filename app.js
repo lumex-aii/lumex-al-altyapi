@@ -11,7 +11,7 @@ const menuDiv = document.getElementById("menu");
 const ordersList = document.getElementById("orders");
 const totalSpan = document.getElementById("total");
 
-// Menü butonları
+// Menü oluştur
 menuItems.forEach(item => {
   const btn = document.createElement("button");
   btn.innerText = item.name + " - " + item.price + "₺";
@@ -30,22 +30,24 @@ function order(itemName) {
   totalMoney += pizza.price;
   totalSpan.innerText = totalMoney;
 
-  const orderData = {
+  // AI'a sipariş gönder
+  aiLogOrder({
     item: itemName,
     price: pizza.price,
     time: new Date().toISOString()
-  };
+  });
 
-  // AI'a gönder
-  aiLogOrder(orderData);
-
-  // Local storage kaydet
-  saveOrderData(orderData);
+  // LocalStorage kayıt
+  saveOrderData({
+    item: itemName,
+    price: pizza.price,
+    time: new Date().toISOString()
+  });
 
   orderNumber++;
 }
 
-// AI Durum güncelle
+// AI panel güncelle
 setInterval(()=>{
   document.getElementById("aiStatus").innerText = aiDecision();
   document.getElementById("courierAI").innerText = aiCourierDecision();
