@@ -41,3 +41,10 @@ setInterval(()=>{
   document.getElementById("aiStatus").innerText = aiDecision();
   document.getElementById("courierAI").innerText = aiCourierDecision();
 }, 2000);
+
+// Siparişleri kaydet
+function saveOrderData(order) {
+  let data = JSON.parse(localStorage.getItem("lumexOrders")) || [];
+  data.push(order);
+  localStorage.setItem("lumexOrders", JSON.stringify(data));
+}
