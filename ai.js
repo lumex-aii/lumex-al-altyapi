@@ -1,5 +1,23 @@
 // Lumex AI Brain v0.1
+let aiData = {
+  couriers: []
+};
 
+function aiLogCourier(name, status, distance) {
+  aiData.couriers.push({name, status, distance});
+}
+
+function aiCourierDecision() {
+  if (aiData.couriers.length == 0) return "Kurye yok";
+
+  let nearest = aiData.couriers.sort((a,b)=>a.distance-b.distance)[0];
+  return "En yakın kurye: " + nearest.name;
+}
+
+// Fake kuryeler
+aiLogCourier("Ali", "online", 2);
+aiLogCourier("Mehmet", "online", 5);
+aiLogCourier("Can", "offline", 1);
 let aiData = {
   orders: [],
   couriers: [],
