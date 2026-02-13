@@ -2,11 +2,11 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Lumex AI Restaurant System</title>
+  <title>Lumex AI Dispatch System</title>
 </head>
 <body>
 
-<h1>🍕 Lumex AI Restoran Paneli</h1>
+<h1>🍕 Lumex AI Restaurant Dispatch Panel</h1>
 
 <div id="menu"></div>
 
@@ -15,11 +15,19 @@
 
 <h3>💰 Toplam Kazanç: <span id="total">0</span>₺</h3>
 
-<h2>🤖 AI Durumu</h2>
-<div id="aiStatus"></div>
-<div id="courierAI"></div>
+<hr>
+
+<h2>🤖 AI Dashboard</h2>
+<p id="aiStatus"></p>
+<p id="courierDecision"></p>
+<p id="prediction"></p>
+
+<hr>
+<h2>📊 Yoğunluk Analizi</h2>
+<p id="orderRate"></p>
 
 <script src="ai.js"></script>
+<script src="analytics.js"></script>
 <script src="app.js"></script>
 
 </body>
