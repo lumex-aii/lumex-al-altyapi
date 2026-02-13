@@ -2,41 +2,41 @@ let orderNumber = 1;
 let totalMoney = 0;
 
 const menuItems = [
-  {name:"Margherita", price:120},
-  {name:"Sucuklu", price:140},
-  {name:"Karışık", price:160}
+  {name: "Margherita Pizza", price: 120},
+  {name: "Sucuklu Pizza", price: 140},
+  {name: "Karışık Pizza", price: 160}
 ];
 
 const menuDiv = document.getElementById("menu");
 const ordersList = document.getElementById("orders");
 const totalSpan = document.getElementById("total");
 
-menuItems.forEach(item=>{
-  let btn = document.createElement("button");
+// Menü butonları
+menuItems.forEach(item => {
+  const btn = document.createElement("button");
   btn.innerText = item.name + " - " + item.price + "₺";
-  btn.onclick = ()=>order(item);
+  btn.onclick = () => order(item.name);
   menuDiv.appendChild(btn);
 });
 
-function order(item){
-  let li = document.createElement("li");
-  li.innerText = "#" + orderNumber + " " + item.name + " " + item.price + "₺";
+// Sipariş
+function order(itemName) {
+  const pizza = menuItems.find(p => p.name === itemName);
+
+  const li = document.createElement("li");
+  li.innerText = "Sipariş #" + orderNumber + " → " + itemName + " (" + pizza.price + "₺)";
   ordersList.appendChild(li);
 
-  totalMoney += item.price;
+  totalMoney += pizza.price;
   totalSpan.innerText = totalMoney;
 
-  let data = {item:item.name, price:item.price, time:Date.now()};
-  aiLogOrder(data);
-  logOrderTime();
+  aiLogOrder({ item: itemName, price: pizza.price, time: new Date() });
 
   orderNumber++;
 }
 
+// AI güncelle
 setInterval(()=>{
-  document.getElementById("aiStatus").innerText = aiSystemStatus();
-  document.getElementById("courierDecision").innerText = dispatchCourier();
-  document.getElementById("prediction").innerText = predictNextOrders();
-  document.getElementById("orderRate").innerText =
-    "⏱ Son 1 dakikadaki sipariş: " + orderRatePerMinute();
+  document.getElementById("aiStatus").innerText = aiDecision();
+  document.getElementById("courierAI").innerText = aiCourierDecision();
 }, 2000);
