@@ -36,3 +36,6 @@ function order(item) {
 
   orderNumber++;
 }
+setInterval(()=>{
+  document.getElementById("aiStatus").innerText = aiDecision();
+}, 2000);
