@@ -1,28 +1,25 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>LUMEX QR Menü</title>
+  <meta charset="UTF-8">
+  <title>Lumex AI Restaurant System</title>
 </head>
-
 <body>
 
-<h1>🍕 Pizzacı Menü</h1>
+<h1>🍕 Lumex AI Restoran Paneli</h1>
 
 <div id="menu"></div>
 
-<h2>🧾 Siparişler</h2>
-<h3>💰 Toplam Kazanç: <span id="total">0</span> ₺</h3>
-
+<h2>📦 Siparişler</h2>
 <ul id="orders"></ul>
 
-<h3>🤖 AI Durum: <span id="aiStatus">yükleniyor...</span></h3>
-<h3>🚴 Kurye AI: <span id="courierAI">yükleniyor...</span></h3>
+<h3>💰 Toplam Kazanç: <span id="total">0</span>₺</h3>
 
-<!-- ÖNCE AI -->
+<h2>🤖 AI Durumu</h2>
+<div id="aiStatus"></div>
+<div id="courierAI"></div>
+
 <script src="ai.js"></script>
-
-<!-- SONRA APP -->
 <script src="app.js"></script>
 
 </body>
