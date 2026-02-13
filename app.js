@@ -20,6 +20,10 @@ menuItems.forEach(item => {
 });
 
 // Sipariş fonksiyonu
+aiLogOrder({
+  item: item,
+  time: new Date().toISOString()
+});
 function order(item) {
   const pizza = menuItems.find(p => p.name === item);
 
