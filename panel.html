@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lumex AI Admin Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🍕 Lumex AI Restaurant Dispatch Panel</h1>
+<button onclick="logout()">Çıkış</button>
+
+<div id="menu"></div>
+
+<h2>📦 Siparişler</h2>
+<ul id="orders"></ul>
+
+<h3>💰 Toplam Kazanç: <span id="total">0</span> ₺</h3>
+
+<hr>
+
+<h2>🤖 AI Dashboard</h2>
+<p>Durum: <span id="aiStatus"></span></p>
+<p>Kurye: <span id="courierAI"></span></p>
+
+<script src="ai.js"></script>
+<script src="app.js"></script>
+
+<script>
+// Admin kontrol
+if (localStorage.getItem("lumexAdmin") !== "true") {
+  window.location.href = "index.html";
+}
+
+function logout() {
+  localStorage.removeItem("lumexAdmin");
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
