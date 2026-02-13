@@ -39,3 +39,6 @@ function order(item) {
 setInterval(()=>{
   document.getElementById("aiStatus").innerText = aiDecision();
 }, 2000);
+setInterval(()=>{
+  document.getElementById("courierAI").innerText = aiCourierDecision();
+}, 2000);
