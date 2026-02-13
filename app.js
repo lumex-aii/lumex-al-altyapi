@@ -2,60 +2,41 @@ let orderNumber = 1;
 let totalMoney = 0;
 
 const menuItems = [
-  {name: "Margherita Pizza", price: 120},
-  {name: "Sucuklu Pizza", price: 140},
-  {name: "Karışık Pizza", price: 160}
+  {name:"Margherita", price:120},
+  {name:"Sucuklu", price:140},
+  {name:"Karışık", price:160}
 ];
 
 const menuDiv = document.getElementById("menu");
 const ordersList = document.getElementById("orders");
 const totalSpan = document.getElementById("total");
 
-// Menü oluştur
-menuItems.forEach(item => {
-  const btn = document.createElement("button");
+menuItems.forEach(item=>{
+  let btn = document.createElement("button");
   btn.innerText = item.name + " - " + item.price + "₺";
-  btn.onclick = () => order(item.name);
+  btn.onclick = ()=>order(item);
   menuDiv.appendChild(btn);
 });
 
-// Sipariş fonksiyonu
-function order(itemName) {
-  const pizza = menuItems.find(p => p.name === itemName);
-
-  const li = document.createElement("li");
-  li.innerText = "Sipariş #" + orderNumber + " → " + itemName + " (" + pizza.price + "₺)";
+function order(item){
+  let li = document.createElement("li");
+  li.innerText = "#" + orderNumber + " " + item.name + " " + item.price + "₺";
   ordersList.appendChild(li);
 
-  totalMoney += pizza.price;
+  totalMoney += item.price;
   totalSpan.innerText = totalMoney;
 
-  // AI'a sipariş gönder
-  aiLogOrder({
-    item: itemName,
-    price: pizza.price,
-    time: new Date().toISOString()
-  });
-
-  // LocalStorage kayıt
-  saveOrderData({
-    item: itemName,
-    price: pizza.price,
-    time: new Date().toISOString()
-  });
+  let data = {item:item.name, price:item.price, time:Date.now()};
+  aiLogOrder(data);
+  logOrderTime();
 
   orderNumber++;
 }
 
-// AI panel güncelle
 setInterval(()=>{
-  document.getElementById("aiStatus").innerText = aiDecision();
-  document.getElementById("courierAI").innerText = aiCourierDecision();
+  document.getElementById("aiStatus").innerText = aiSystemStatus();
+  document.getElementById("courierDecision").innerText = dispatchCourier();
+  document.getElementById("prediction").innerText = predictNextOrders();
+  document.getElementById("orderRate").innerText =
+    "⏱ Son 1 dakikadaki sipariş: " + orderRatePerMinute();
 }, 2000);
-
-// Siparişleri kaydet
-function saveOrderData(order) {
-  let data = JSON.parse(localStorage.getItem("lumexOrders")) || [];
-  data.push(order);
-  localStorage.setItem("lumexOrders", JSON.stringify(data));
-}
