@@ -42,3 +42,7 @@ setInterval(()=>{
 setInterval(()=>{
   document.getElementById("courierAI").innerText = aiCourierDecision();
 }, 2000);
+
+setInterval(()=>{
+  document.getElementById("courierAI").innerText = aiCourierDecision();
+}, 2000);
