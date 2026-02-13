@@ -33,3 +33,6 @@ function aiDecision() {
   }
   return "Sistem normal çalışıyor.";
 }
+aiLogCourier("Ali", "online", 2);
+aiLogCourier("Mehmet", "online", 5);
+aiLogCourier("Can", "offline", 1);
