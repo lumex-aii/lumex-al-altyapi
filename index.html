@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Lumex AI Dispatch System</title>
+<meta charset="UTF-8">
+<title>Lumex AI Admin Login</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🍕 Lumex AI Restaurant Dispatch Panel</h1>
+<h2>🔐 Lumex AI Admin Giriş</h2>
 
-<div id="menu"></div>
+<input id="username" placeholder="Kullanıcı adı"><br>
+<input id="password" type="password" placeholder="Şifre"><br>
+<button onclick="login()">Giriş Yap</button>
 
-<h2>📦 Siparişler</h2>
-<ul id="orders"></ul>
+<p id="loginStatus"></p>
 
-<h3>💰 Toplam Kazanç: <span id="total">0</span>₺</h3>
+<script>
+function login() {
+  let u = document.getElementById("username").value;
+  let p = document.getElementById("password").value;
 
-<hr>
-
-<h2>🤖 AI Dashboard</h2>
-<p id="aiStatus"></p>
-<p id="courierDecision"></p>
-<p id="prediction"></p>
-
-<hr>
-<h2>📊 Yoğunluk Analizi</h2>
-<p id="orderRate"></p>
-
-<script src="ai.js"></script>
-<script src="analytics.js"></script>
-<script src="app.js"></script>
+  // Basit admin bilgisi
+  if (u === "admin" && p === "1234") {
+    localStorage.setItem("lumexAdmin", "true");
+    window.location.href = "panel.html";
+  } else {
+    document.getElementById("loginStatus").innerText = "❌ Hatalı giriş";
+  }
+}
+</script>
 
 </body>
 </html>
