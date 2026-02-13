@@ -11,7 +11,12 @@ function aiLogOrder(order) {
   aiData.orders.push(order);
   console.log("AI Order Logged:", order);
 }
+function aiCourierDecision() {
+  if (aiData.couriers.length == 0) return "Kurye yok!";
 
+  let nearest = aiData.couriers.sort((a,b)=>a.distance-b.distance)[0];
+  return "En yakın kurye: " + nearest.name;
+}
 // Kurye durumu
 function aiLogCourier(name, status, distance) {
   aiData.couriers.push({name, status, distance});
