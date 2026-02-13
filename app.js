@@ -20,10 +20,6 @@ menuItems.forEach(item => {
 });
 
 // Sipariş fonksiyonu
-aiLogOrder({
-  item: item,
-  time: new Date().toISOString()
-});
 function order(item) {
   const pizza = menuItems.find(p => p.name === item);
 
@@ -34,15 +30,14 @@ function order(item) {
   totalMoney += pizza.price;
   totalSpan.innerText = totalMoney;
 
+  // AI logla
+  aiLogOrder(item);
+
   orderNumber++;
 }
+
+// AI status güncelle
 setInterval(()=>{
   document.getElementById("aiStatus").innerText = aiDecision();
-}, 2000);
-setInterval(()=>{
-  document.getElementById("courierAI").innerText = aiCourierDecision();
-}, 2000);
-
-setInterval(()=>{
   document.getElementById("courierAI").innerText = aiCourierDecision();
 }, 2000);
