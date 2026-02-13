@@ -30,16 +30,19 @@ function order(itemName) {
   totalMoney += pizza.price;
   totalSpan.innerText = totalMoney;
 
-  // AI'a sipariş gönder
-  aiLogOrder({ item: itemName, price: pizza.price, time: new Date() });
+  const orderData = {
+    item: itemName,
+    price: pizza.price,
+    time: new Date().toISOString()
+  };
 
-  saveOrderData({
-  item: item,
-  price: pizza.price,
-  time: new Date().toISOString()
-});
+  // AI'a gönder
+  aiLogOrder(orderData);
 
-orderNumber++;
+  // Local storage kaydet
+  saveOrderData(orderData);
+
+  orderNumber++;
 }
 
 // AI Durum güncelle
