@@ -1,40 +1,36 @@
-// Lumex AI Brain v0.1
-
-let aiData = {
+let AI = {
   orders: [],
-  couriers: [],
-  restaurantSpeed: 1
+  couriers: [
+    {name:"Ali", distance:2, speed:30, status:"online"},
+    {name:"Mehmet", distance:5, speed:20, status:"online"},
+    {name:"Can", distance:1, speed:25, status:"offline"}
+  ]
 };
 
-// Sipariş kaydet
 function aiLogOrder(order) {
-  aiData.orders.push(order);
-  console.log("AI Order Logged:", order);
+  AI.orders.push(order);
 }
 
-// Kurye ekle
-function aiLogCourier(name, status, distance) {
-  aiData.couriers.push({ name, status, distance });
-  console.log("AI Courier Logged:", name);
+function dispatchCourier() {
+  let active = AI.couriers.filter(c=>c.status==="online");
+  if(active.length === 0) return "🚫 Kurye yok";
+
+  active.forEach(c=>{
+    c.score = c.distance / c.speed;
+  });
+
+  active.sort((a,b)=>a.score-b.score);
+  return "🚴 Dispatch edilen kurye: " + active[0].name;
 }
 
-// En yakın kurye seç
-function aiCourierDecision() {
-  let onlineCouriers = aiData.couriers.filter(c => c.status === "online");
-  if (onlineCouriers.length === 0) return "🚫 Aktif kurye yok";
-
-  let nearest = onlineCouriers.sort((a,b)=>a.distance-b.distance)[0];
-  return "🚴 En yakın kurye: " + nearest.name;
+function aiSystemStatus() {
+  if(AI.orders.length > 10) return "🔥 Aşırı yoğun! Kurye ekle";
+  if(AI.orders.length > 5) return "⚠️ Yoğunluk yüksek";
+  return "✅ Sistem stabil";
 }
 
-// AI karar sistemi
-function aiDecision() {
-  if (aiData.orders.length > 5) return "🔥 Yoğunluk yüksek! Kurye ekle!";
-  if (aiData.restaurantSpeed < 1) return "🐢 Restoran yavaş! Menü azalt.";
-  return "✅ Sistem normal çalışıyor.";
+function predictNextOrders() {
+  let last10 = AI.orders.slice(-10);
+  let rate = last10.length / 10; 
+  return "📈 Tahmini sipariş artışı: " + (rate*100).toFixed(1) + "%";
 }
-
-// Fake test kuryeler
-aiLogCourier("Ali", "online", 2);
-aiLogCourier("Mehmet", "online", 5);
-aiLogCourier("Can", "offline", 1);
