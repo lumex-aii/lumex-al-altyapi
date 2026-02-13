@@ -1,56 +1,55 @@
-// Lumex AI Brain v0.1
-let aiData = {
-  couriers: []
-};
+// Lumex AI Brain v1.0
 
-function aiLogCourier(name, status, distance) {
-  aiData.couriers.push({name, status, distance});
-}
-
-function aiCourierDecision() {
-  if (aiData.couriers.length == 0) return "Kurye yok";
-
-  let nearest = aiData.couriers.sort((a,b)=>a.distance-b.distance)[0];
-  return "En yakın kurye: " + nearest.name;
-}
-
-// Fake kuryeler
-aiLogCourier("Ali", "online", 2);
-aiLogCourier("Mehmet", "online", 5);
-aiLogCourier("Can", "offline", 1);
 let aiData = {
   orders: [],
   couriers: [],
-  restaurantSpeed: 1 // 1 normal, 0.5 yavaş, 2 hızlı
+  restaurantSpeed: 1 // 1 normal, <1 yavaş, >1 hızlı
 };
 
-// Sipariş kaydet
-function aiLogOrder(order) {
-  aiData.orders.push(order);
-  console.log("AI Order Logged:", order);
-}
-function aiCourierDecision() {
-  if (aiData.couriers.length == 0) return "Kurye yok!";
+// ================= ORDERS =================
 
-  let nearest = aiData.couriers.sort((a,b)=>a.distance-b.distance)[0];
-  return "En yakın kurye: " + nearest.name;
+// Sipariş kaydet
+function aiLogOrder(item) {
+  aiData.orders.push({
+    item: item,
+    time: Date.now()
+  });
+  console.log("AI Order Logged:", item);
 }
-// Kurye durumu
+
+// ================= COURIERS =================
+
+// Kurye ekle
 function aiLogCourier(name, status, distance) {
   aiData.couriers.push({name, status, distance});
   console.log("AI Courier Logged:", name);
 }
 
-// Basit AI karar sistemi
+// En yakın kurye AI
+function aiCourierDecision() {
+  if (aiData.couriers.length == 0) return "Kurye yok!";
+
+  let onlineCouriers = aiData.couriers.filter(c => c.status === "online");
+  if (onlineCouriers.length == 0) return "Online kurye yok!";
+
+  let nearest = onlineCouriers.sort((a,b)=>a.distance-b.distance)[0];
+  return "En yakın kurye: " + nearest.name + " (" + nearest.distance + "km)";
+}
+
+// ================= RESTAURANT AI =================
+
+// Restoran AI karar sistemi
 function aiDecision() {
   if (aiData.orders.length > 5) {
-    return "Yoğunluk yüksek! Kurye ekle!";
+    return "🔥 Yoğunluk yüksek! Kurye ekle!";
   }
   if (aiData.restaurantSpeed < 1) {
-    return "Restoran yavaş! Menü azalt.";
+    return "🐢 Restoran yavaş! Menü azalt.";
   }
-  return "Sistem normal çalışıyor.";
+  return "✅ Sistem normal çalışıyor.";
 }
+
+// ================= FAKE DATA (SIMULASYON) =================
 aiLogCourier("Ali", "online", 2);
 aiLogCourier("Mehmet", "online", 5);
 aiLogCourier("Can", "offline", 1);
